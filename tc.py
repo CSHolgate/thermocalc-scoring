@@ -147,28 +147,39 @@ class calc():
             tent_assessed = sum(tent_assessed_bool)
             crit_assessed = sum(crit_assessed_bool)
 
+            # Assign a confidence score
+            ### WE NEED TO WORK ON THIS (SEE BELOW)
+            self.confidence_score = ((crit_assessed/len(alloy_ternaries)) 
+                                     + (0.5 * tent_assessed/len(alloy_ternaries)) 
+                                     - (len(alloy_ternaries)-crit_assessed-tent_assessed))
+
         """
-        Neal: This would be the place I think to build in some confidence score as a result
-        of the assessed ternaries. One thought is to take some function like:
+        Neal: We should talk more (probably with Sam and Satanu) about how to do
+        this scoring.
 
+        The key issue is that we will probably run into cases (like Nb-Ti-Ru)
+        where there are no assessed ternaries in the database. A simple approach
+        of just counting the positive hits, weighing the tentatively assessed
+        systems worse, like:
+        
         confidence_score = frac_critically_assessed + 0.5 * frac_tentatively_assessed
-
-        This would effectively count tentatively assessed systems less. A completely unassessed system
-        would receive a score of 0, whereas a perfect system would get 1.
-
-        An issues with this approach:
-        We will probably run into cases (like Nb-Ti-Ru) where there is no assessed ternaries.
-        This would receive a score of 0. But so would something like (Nb-Ti-Ru-Y). But in the
-        first case there would only be one missing ternary, whereas in the second there is four
-        missing ternaries. This may mean that we would want to add in negative score for missed
-        ternaries. But this would require the scoring metric to be able to handle negative values.
-        Neal and I talked about this issue for a bit, but I think we need to think about this some
-        more. A negative score could be implemented as:
-
-        confidence_score = frac_critically_assessed + 0.5 * frac_tent_assessed - frac_not_assessed
-
-        Then the score would be bounded by -1 to 1. The key point here (I think) would be what prefactor
-        do tentatively assessed systems get?
+        
+        would assign a score of 0. A perfect system would get 1. This sounds
+        good, but consider something like (Nb-Ti-Ru-Y). This system has four
+        ternaries and all are unassessed. So in the previous case there is one
+        missing ternary but here there are four. With the above equation both
+        would receive the same score (of 0) which doesn't feel right. There is a
+        lot more extrapolation happening for the case with four missing
+        ternaries.
+         
+        This may mean that we would want to add in a **not normalized** negative
+        score for missed ternaries. But this would require the scoring metric to
+        be able to handle (potentially arbitrary) negative values. And
+        realistically, given how incomplete the databases are, I suspect it
+        would make most of the scores negative. Another option is to just go
+        unbounded in the score, but I would guess that would also cause issues.
+        Anyway, this now obnoxiously long comment will serve as a marker for
+        discussion!
         """
         
         ### TESTING REGION TKTK ###
@@ -302,6 +313,7 @@ def main():
 
         # Run Confidence function
         results.confidence()
+        print('Thermo-Calc Confidence Score is: ', results.confidence_score)
 
     except json.JSONDecodeError:
         print("Error: globalcomp must be a valid JSON string. Example: '{\"Fe\": 0.5, \"Ni\": 0.5}'")
