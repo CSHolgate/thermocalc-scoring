@@ -3,6 +3,7 @@ import pandas as pd
 from tc_python import *
 import argparse
 import json
+from itertools import combinations
 
 class calc():
     """
@@ -109,6 +110,77 @@ class calc():
     def confidence(self):
         # Note that this function is currently only written to handle the refractories. If we want to do
         # FCC+L12 we can also implement that.
+
+        # First lets import the list of critically and tentatively assessed ternaries
+        crit = pd.read_csv('./tchea7-criticalassessedternaries.csv') # these ternaries are the most accurate
+        tent = pd.read_csv('./tchea7-tentativeassessedternaries.csv') # these are less accurate
+        all_ternaries = pd.concat([crit, tent]).reset_index() # This combines both in case we don't care to distinguish.
+        tchea_elements = ['Al', 'B', 'C', 'Co', 'Cr', 'Cu', 'Fe', 'Hf', 'Ir', 
+                          'Mn', 'Mo', 'N', 'Nb', 'Ni', 'Re', 'Rh', 'Ru', 'Si', 
+                          'Sn', 'Ta', 'Ti', 'V', 'W', 'Y', 'Zn', 'Zr'] # This is a list of all elements in the database
+        
+        elements = list(self.globalcomp.keys()) # Gather the list of elements in the candidate alloy
+
+        # Define a function to count how many ternaries are exist in a predifined list
+        def check_elements_in_df(df, elements_tuple):
+            elements_set = set(elements_tuple)
+            for idx, row in df.iterrows():
+                row_elements = set([row['Element1'], row['Element2'], row['Element3']])
+                if row_elements == elements_set:
+                    return True
+            return False
+
+        # First check if we are only dealing with two elements. 
+        # If so, we'll just assume a perfect score.
+        if len(elements) <=2:
+            self.confidence_score = 1 # assign a perfect score
+        
+        # Otherwise we will deal with the ternaries
+        else:
+            # Generate a list of ternaries 
+            alloy_ternaries = list(combinations(elements, 3))
+            tent_assessed_bool = [] # Create an empty list for the number of tentatively assessed systems
+            crit_assessed_bool = [] # Create an empty list for the number of critically assessed systmes
+            for ternary in alloy_ternaries:
+                tent_assessed_bool.append(check_elements_in_df(tent, ternary))
+                crit_assessed_bool.append(check_elements_in_df(crit, ternary))
+            tent_assessed = sum(tent_assessed_bool)
+            crit_assessed = sum(crit_assessed_bool)
+
+        """
+        Neal: This would be the place I think to build in some confidence score as a result
+        of the assessed ternaries. One thought is to take some function like:
+
+        confidence_score = frac_critically_assessed + 0.5 * frac_tentatively_assessed
+
+        This would effectively count tentatively assessed systems less. A completely unassessed system
+        would receive a score of 0, whereas a perfect system would get 1.
+
+        An issues with this approach:
+        We will probably run into cases (like Nb-Ti-Ru) where there is no assessed ternaries.
+        This would receive a score of 0. But so would something like (Nb-Ti-Ru-Y). But in the
+        first case there would only be one missing ternary, whereas in the second there is four
+        missing ternaries. This may mean that we would want to add in negative score for missed
+        ternaries. But this would require the scoring metric to be able to handle negative values.
+        Neal and I talked about this issue for a bit, but I think we need to think about this some
+        more. A negative score could be implemented as:
+
+        confidence_score = frac_critically_assessed + 0.5 * frac_tent_assessed - frac_not_assessed
+
+        Then the score would be bounded by -1 to 1. The key point here (I think) would be what prefactor
+        do tentatively assessed systems get?
+        """
+        
+        ### TESTING REGION TKTK ###
+        print('Number of Critically Assessed Ternaries: ', crit_assessed)
+        print('Fraction of Critically Assessed Ternaries: ', crit_assessed/len(alloy_ternaries))
+        print()
+        print('Number of Tentatively Assessed Ternaries: ', tent_assessed)
+        print('Fraction of Tentatviely Assessed Ternaries: ', tent_assessed/len(alloy_ternaries))
+        print()
+        print('Total Number of Assessed Ternaries: ', crit_assessed + tent_assessed)
+        print('Fraction of Assessed Ternaries: ', (crit_assessed + tent_assessed)/len(alloy_ternaries))
+        ### END TESTING REGION ###
 
         
 
@@ -227,6 +299,9 @@ def main():
         # Run scoring function
         results.scoring()
         print(results.scoring_df)
+
+        # Run Confidence function
+        results.confidence()
 
     except json.JSONDecodeError:
         print("Error: globalcomp must be a valid JSON string. Example: '{\"Fe\": 0.5, \"Ni\": 0.5}'")
