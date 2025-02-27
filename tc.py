@@ -35,6 +35,31 @@ class calc():
         pass
 
     def ThermoCalc(self, database='TCHEA7'):
+        """
+        The ThermoCalc function is here to actually run the Thermo-Calc
+        calculations and create a dataframe of results, which is written to a
+        object.
+
+        INPUTS:
+            - The user can optionally input a database. By default, this is set
+              to the state-of-the-art database for high entropy alloys (TCHEA7).
+              If we go down the route of Ni-superalloys this could be set to
+              'TCNi12'.
+
+        OUTPUTS:
+            - self.df: A pandas dataframe (in long form) with the key results
+              from the equilibrium calculation. Right now this contains columns
+              on:
+                - The global alloy composition (for future reference)
+                - The calculation temperature (in K)
+                - The predicted equilibrium phase(s)
+                - The predicted phase quantity (in mole fraction)
+                - If the phase is BCC or B2, the following columns get non-nan
+                  values:
+                    - Is the phase ordered {0: Disordered BCC, 1: Ordered B2}
+                    - The lattice parameter of the phase (in Å)
+        """
+
         # Create an array of temperatures. I'm setting this up to be non-uniformly spaced because we'll care more
         # about high temperatures than low (to calculate when BCC and B2 lose their stability).
         self.Temps = np.append(np.array([100, 500, 800, 900, 1000])+273.15, np.arange(1100,2050,50)+273.15)
@@ -48,8 +73,8 @@ class calc():
             for temp in self.Temps: # Run a calculation for each temperature we care about
                 try: # sometimes an individual calculation fails. If this happens we don't want to kill everything
                     (calc.
-                     set_condition('P', 100000).
-                     set_condition('T', temp)
+                     set_condition('P', 100000). # Set pressure
+                     set_condition('T', temp) # Set temperature
                     )
 
                     for element in elements: # Set the concentration of each element from the global composition
@@ -67,10 +92,13 @@ class calc():
                         # Measure how much of the phase we have
                         phasequantity = calc_result.get_value_of(ThermodynamicQuantity.mole_fraction_of_a_phase(phase)) 
 
+                        # ThermoCalc annoying does not clearly output whether a phase is truly BCC or B2
+                        # but rather uses a combined name for each. We need to extract whether this
+                        # phase is BCC or B2. 
                         if 'BCC_B2' in phase:
                             # Extract the lattice parameter of the phase
                             # BCC has 2 atoms per unit cell, so given a molar volume, we can
-                            # convert to a lattice parameter via (Vm * 2 / 6.022e23)
+                            # convert to a lattice parameter via:  a = (Vm * 2 / 6.022e23)
                             molar_volume = calc_result.get_value_of(f"VM({phase})")
                             a = ((molar_volume * 2 / 6.022e23)**(1/3)) * 1e10 # Value in Å
 
@@ -92,7 +120,7 @@ class calc():
                                           'IsOrdered': is_ordered,
                                           'LatticeParameter': a
                                           })
-                    print(temp) # For testing only
+                    print(temp) # For testing only, just to get an idea of how fast the calculations run
                     
                 except:
                     phaselist.append({"Global Composition": self.globalcomp, 
@@ -104,10 +132,22 @@ class calc():
                                       })
                     pass
         
-        self.phaselist = phaselist
-        self.df = pd.DataFrame(phaselist)
+        self.df = pd.DataFrame(phaselist) # Save the results as a pandas dataframe object
 
     def confidence(self):
+        """
+        The confidence function will provide some quantified amount of "trust"
+        we should place in the Thermo-Calc results based on how many of the
+        systems are assessed (critically or tentatively) in the database.
+
+        INPUTS:
+            - The global composition dictionary object is called from __init__
+
+        OUTPUTS:
+            - self.confidence_score: a float bounded by (-inf, 1). This idea is
+              a work in progress. We should discuss the best way to handle this
+              score.
+        """
         # Note that this function is currently only written to handle the refractories. If we want to do
         # FCC+L12 we can also implement that.
 
@@ -124,7 +164,7 @@ class calc():
         # Define a function to count how many ternaries are exist in a predifined list
         def check_elements_in_df(df, elements_tuple):
             elements_set = set(elements_tuple)
-            for idx, row in df.iterrows():
+            for _, row in df.iterrows():
                 row_elements = set([row['Element1'], row['Element2'], row['Element3']])
                 if row_elements == elements_set:
                     return True
@@ -196,19 +236,33 @@ class calc():
         
 
     def scoring(self):
-        # Goal is to take some TC results and check whether or not the alloy forms BCC and B2 together.
-        # Should also check for any other phases that we don't want.
-        # Should ideally check how long BCC and B2 are stable for (i.e., what temp they disappear at)
-        # Should check for misfit between the phases
-        # Then somehow we need to do the scoring for this.
+        """
+        The scoring function will take in Thermo-Calc results for a candidate
+        alloy and calculate a score that can be used for preference learning. To
+        do this, a decent amount of post-processing must take place.
+
+        Note: The scoring function is TKTK.
+
+        INPUTS:
+            - self.df (The pandas dataframe containing the output from
+              Thermo-Calc)
+
+        OUTPUTS:
+            - self.scoring_df: A dataframe of processed data for scoring. This
+              probably does not need to be an object eventually, but for now I
+              am keeping this output for any troubleshooting.
+            - self.score: TKTK. The score used to rank the LM's alloy
+              prediction.
+        """
 
         # Filter the datasets to extract just the rows with BCC and B2s
         bccs = self.df[(self.df['Phase'].str.contains('BCC_B2'))&(self.df['IsOrdered']==0)]
         b2s = self.df[(self.df['Phase'].str.contains('BCC_B2'))&(self.df['IsOrdered']==1)]
 
-        # Check whether BCC or B2 form at all:
-        # One issue with the if... else... below is that it doesn't account for both phases forming at the same temperature.
-        # Should we check this for each temperature? If so we can build up a total score or something?
+        # Check whether BCC or B2 form at all: One issue with the two code lines
+        #below is that it doesn't account for both phases forming at the same
+        # temperature. Should we check this for each temperature? If so we can
+        # build up a total score or something?
         bcc_forms = len(bccs) > 0
         b2_forms = len(b2s) > 0
         
@@ -269,14 +323,14 @@ class calc():
                                'LatticeMismatch':a_mismatch})
         
         self.scoring_df = pd.DataFrame(scoring_list)
-            
+        
+        # self.score TKTK
 
 
+        ### TESTING REGION ###
         # Extract out the maximum temperature of each phase:
         max_bcc_temp = bccs.Temperature.max()
         max_b2_temp = b2s.Temperature.max()
-        # Function to score this TKTK
-        ### TESTING REGION ###
         print("We want the BCC to be more stable than the B2 phase")
         print("Temperature difference between BCC and B2: ", max_bcc_temp - max_b2_temp)
         ### END TESTING REGION ###
@@ -334,14 +388,14 @@ def main():
 if __name__ == "__main__":
 
     # To print to file, uncomment block below
-    import sys
-    sys.stdout.reconfigure(encoding='utf-8')
-    with open('sample_output.txt', 'w', encoding='utf-8') as f:
-        sys.stdout = f
-        main()
+    # import sys
+    # sys.stdout.reconfigure(encoding='utf-8')
+    # with open('sample_output.txt', 'w', encoding='utf-8') as f:
+    #     sys.stdout = f
+    #     main()
     
     # To print to terminal, uncomment this:
-    # main()
+    main()
     
     ### EXAMPLE USE from Command Prompt:
     ### python tc.py "{""Nb"":25, ""Al"":75}"
