@@ -332,7 +332,17 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+
+    # To print to file, uncomment block below
+    import sys
+    sys.stdout.reconfigure(encoding='utf-8')
+    with open('sample_output.txt', 'w', encoding='utf-8') as f:
+        sys.stdout = f
+        main()
+    
+    # To print to terminal, uncomment this:
+    # main()
+    
     ### EXAMPLE USE from Command Prompt:
     ### python tc.py "{""Nb"":25, ""Al"":75}"
     ### Note: double quotes are (annoyingly) important apparently.

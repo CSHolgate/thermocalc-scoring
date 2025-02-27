@@ -1,0 +1,221 @@
+### THERMOCALC PRINTS: CAN DELETE ###
+14:05:13,670 [Thread-1] INFO  CalculationEngine: Starting Thermo-Calc 2024a, Java-version: 21
+14:05:16,894 [Thread-1] INFO  CalculationEngine: Opening database::TCHEA7::
+14:05:20,315 [Thread-1] INFO  JavaWrapper: *** Invoking Gibbs Energy System v6 ***
+14:05:20,487 [Thread-1] INFO  CalculationEngine:  Creating a new composition set BCC_B2#2
+14:05:20,487 [Thread-1] INFO  CalculationEngine: New CS: BCC_B2#2
+14:05:20,487 [Thread-1] INFO  CalculationEngine: New CS: BCC_A2#2
+14:05:27,805 [Thread-1] INFO  CalculationEngine:    'SSUB6 (2017): SGTE Substance Database V6.0, provided by TCSAB'
+14:05:27,805 [Thread-1] INFO  CalculationEngine:    'N. Dupin, fixing VA:VA=30*T'
+14:05:27,805 [Thread-1] INFO  CalculationEngine:    'Default volume data, V0DFLT=7.0E-6; VADFLT=10.0E-6*THREE*DELTAT'
+14:05:27,805 [Thread-1] INFO  CalculationEngine:    'A.T. Dinsdale, SGTE Data for Pure Elements, NPL Report DMA(A) 195 Rev.
+14:05:27,805 [Thread-1] INFO  CalculationEngine:        August 1990'
+14:05:27,805 [Thread-1] INFO  CalculationEngine:    'N. Dupin, introduction of Nb to NI15VA-4SL'
+14:05:27,805 [Thread-1] INFO  CalculationEngine:    'X.-G. Lu, M. Selleby and B. Sundman, CALPHAD, Vol. 29, 2005, pp. 68-89;
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        Molar volumes'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'A. Markstrom, Swerea KIMAB, Sweden; Molar volumes'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Volume data for TCFE4, 2006'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'N. Saunders, COST 507 Report (1998); Al-Nb'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'J.M. Joubert, B. Sundman, N. Dupin, Calphad, 28 (3) 299-306 2004'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Volume data, N. Dupin 2008'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'G(LAVES,AA)=3*G(SER,AA)+15000'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Thermo-Calc Software AB, Stockholm, 2019; Molar volumes'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'J. Bratberg, Thermocalc Software AB, Stockholm, Sweden, 2010'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'S. Liu et al., CALPHAD 38 (2012) 43-58'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'New sigma using combined CEF'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'S. Prince, B. Sundman, Al-Ru'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'X.-G Lu, PhD thesis work'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'N. Dupin, AD/SN, Ru-W'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Alan Dinsdale, SGTE Data for Pure Elements, Calphad Vol 15(1991) p 317
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        -425, also in NPL Report DMA(A)195 Rev. August 1990'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'C. Wang et al. JPED 35 (2014) 269-275; Ir-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'L. Kjellqvist, TCSAB, Stockholm, 2012; Molar volumes'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'COST 507, 2nd round'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'J. De Keyzer, G. Cacciamani, N. Dupin, P. Wollants, Fe-Ni-Ti, Calphad 2008'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'A. Markstrom, Thermo-Calc Software AB (2015)'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Thermo-Calc Software AB, Sweden, 2019; re-model and merge
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        NI3SN_D019 into ALTI3_D019. '
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'N. Dupin, Thesis, LTPCM, France, 1995; Al-Ni-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'N. Dupin, August 1999, unpublished revision; Cr-Ni-Ti, Al-Cr-Ni-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'J. Bratberg, Thermocalc Software AB, Stockholm, Sweden, 2009'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'A. Markstrom, Thermo-Calc Software AB (2015) Al-Cr-Ni-Ta-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'V.T. Witusiewicz, J. Alloys Compd. 465 (2008) 64-77. Al-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Yang YANG, Molar volume of Ti-Al for project Ti/TiAl II, 2017'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H L Chen, Pure elements
+14:05:27,821 [Thread-1] INFO  CalculationEngine:         solid solutions of Omega, TCTI, 2015-16'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'L Kjellqvist, Thermo-Calc Software AB, Stockholm, 2010; UN_ASSessed
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        parameter, linear combination of unary volume data'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'P. Canale, Z. Metallkd., 93(4)(2002)273-76,Cu-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'L. Kjellqvist, Thermo-Calc Software AB, Stockholm, 2010; Unassessed
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        parameter, linear combination of unary volume data'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, TCSAB, 2022; reassessment of Ir-Nb'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Thermo-Calc Software AB, Sweden, 2013; Unpublished assessment of
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        Mn-Ru. '
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Thermo-Calc Software AB, Stockholm, 2013; Molar volumes'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Liangyan Hao, TCS inc, 2022; Rh-X binary (X = Nb, Si, Ta, V, Y)'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H.L. Chen, database editing,in TCNI Project'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Same or similar interaction as in the corresponding stable phase'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H L Chen, Remodeling of Nb-Sn for the Ti/TiAl project, 2017'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'B.J. Lee, Met Mat. Trans. A, 32A, 2423-2439, 2001; C-Fe-N-Nb-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Checking all ternary assessed with ternary module; January 2009'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Unassessed PARAMETER, linear combination of unary data (MU,SIGMA)'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H.L. Chen, modifications and refinements, (2015)'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Y. Gao, C. Guo, et al. J. Alloys Compd. 479 (2009) 148-151. revised by
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        Hai-Lin Chen on 2012-04; Ru-Ti'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H L Chen, Assessments
+14:05:27,821 [Thread-1] INFO  CalculationEngine:         refinements for the Ti/TiAl project, 2016'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Yang YANG, Molar volume of Ti-Co for project Ti/TiAl II, 2017'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'V.T. Witusiewicz, J Alloys Compd, 472 (2009) 133-161; Al-Nb-Ti Modified
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        by Hai-Lin Chen (2016)'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Thermo-Calc Software AB, Sweden, 2019; update of Nb-Ti and Al-Nb
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        -Ti. '
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'C. Toffolon, N. Dupin; Fe-Nb-Zr'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Thermo-Calc Software AB, Stockholm, 2017; Modification of the
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        HEUSLER_L21 phase according to the validation in multi-component
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        systems, Al-Co-Cr-Fe-Hf-Nb-Ni-Ru-Ta-Ti-Zr'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'M Ghasemi, Thermo-Calc Software AB (2019): assessing the viscosity of
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        metallic liquid'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'T Ishikawa, Meas Sci Technol 23 (2012) 025305; Ti, Ni, Zr, Nb, Ru, Rh, Hf,
+14:05:27,821 [Thread-1] INFO  CalculationEngine:         Ir, Pt, Tb'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'M Ghasemi, Thermo-Calc Software AB (2021): assessing the viscosity of
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        metallic liquid'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Y.Tang, in TCCU2, Thermocalc Software AB, Stockholm, Sweden'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'M. Ghasemi, Thermo-Calc Software: Unifying liquid volume database, 2020'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'M Ghasemi, Thermo-Calc Software AB: assessing the surface tension of
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        metallic liquid, 2020'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'R. Zhang, Thermo-Calc Software AB, Sweden 2023; Reassessment of surface
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        tension using RK rule'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H-L Chen, in TCAL7.0, Evaluation and modeling of electrical resistivity
+14:05:27,821 [Thread-1] INFO  CalculationEngine:         thermal conductivity'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'R. Naraghi, Thermo-Calc Software AB, Sweden, 2021; Default values for
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        ELRS/THCD'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H-L Chen, Default value for thermal conductivity'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H-L Chen, Default value for electrical resistivity'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Estimation of ELRS
+14:05:27,821 [Thread-1] INFO  CalculationEngine:         THCD, Thermo-Calc Software. '
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'H. Mao, Assessment of ELRS
+14:05:27,821 [Thread-1] INFO  CalculationEngine:         THCD, Thermo-Calc Software. '
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'Yang YANG, Thermo-Calc Software AB, Sweden, 2021; Assessment of ELRS/THCD
+14:05:27,821 [Thread-1] INFO  CalculationEngine:        for Ti alloys'
+14:05:27,821 [Thread-1] INFO  CalculationEngine:    'M Ghasemi, Thermo-Calc Software, 2020: ELRS/THCD of liquid'
+14:05:33,352 [Thread-1] INFO  CalculationEngine:  Creating a new composition set BCC_B2#3
+14:05:33,352 [Thread-1] INFO  CalculationEngine: New CS: BCC_B2#3
+14:05:33,352 [Thread-1] INFO  CalculationEngine: New CS: BCC_A2#3
+
+### LOGGING TEMPERATURE STEPS: CAN DELETE ###
+373.15
+773.15
+1073.15
+1173.15
+1273.15
+1373.15
+1423.15
+1473.15
+1523.15
+1573.15
+1623.15
+1673.15
+1723.15
+1773.15
+1823.15
+1873.15
+1923.15
+1973.15
+2023.15
+2073.15
+2123.15
+2173.15
+2223.15
+2273.15
+
+
+### PHASE EQUILIBRIA RESULTS ###
+                Global Composition  Temperature     Phase  Quantity  IsOrdered  LatticeParameter
+0   {'Ru': 15, 'Nb': 70, 'Ti': 15}       373.15  BCC_B2#1  0.700000        0.0          3.302327
+1   {'Ru': 15, 'Nb': 70, 'Ti': 15}       373.15  BCC_B2#3  0.300000        1.0          3.154783
+2   {'Ru': 15, 'Nb': 70, 'Ti': 15}       773.15  BCC_B2#1  0.700111        0.0          3.311933
+3   {'Ru': 15, 'Nb': 70, 'Ti': 15}       773.15  BCC_B2#2  0.299889        1.0          3.166502
+4   {'Ru': 15, 'Nb': 70, 'Ti': 15}      1073.15  BCC_B2#1  0.705322        0.0          3.316898
+5   {'Ru': 15, 'Nb': 70, 'Ti': 15}      1073.15  BCC_B2#2  0.294678        1.0          3.181538
+6   {'Ru': 15, 'Nb': 70, 'Ti': 15}      1173.15  BCC_B2#1  0.712428        0.0          3.317605
+7   {'Ru': 15, 'Nb': 70, 'Ti': 15}      1173.15  BCC_B2#2  0.287572        1.0          3.187072
+8   {'Ru': 15, 'Nb': 70, 'Ti': 15}      1273.15  BCC_B2#1  0.725227        0.0          3.317546
+9   {'Ru': 15, 'Nb': 70, 'Ti': 15}      1273.15  BCC_B2#2  0.274773        1.0          3.192517
+10  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1373.15  BCC_B2#1  0.745888        0.0          3.316555
+11  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1373.15  BCC_B2#2  0.254112        1.0          3.197773
+12  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1423.15  BCC_B2#1  0.759918        0.0          3.315667
+13  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1423.15  BCC_B2#2  0.240082        1.0          3.200330
+14  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1473.15  BCC_B2#1  0.776913        0.0          3.314497
+15  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1473.15  BCC_B2#2  0.223087        1.0          3.202853
+16  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1523.15  BCC_B2#1  0.797353        0.0          3.313031
+17  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1523.15  BCC_B2#2  0.202647        1.0          3.205352
+18  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1573.15  BCC_B2#1  0.821824        0.0          3.311262
+19  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1573.15  BCC_B2#2  0.178176        1.0          3.207840
+20  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1623.15  BCC_B2#1  0.851036        0.0          3.309189
+21  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1623.15  BCC_B2#2  0.148964        1.0          3.210331
+22  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1673.15  BCC_B2#1  0.885810        0.0          3.306828
+23  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1673.15  BCC_B2#2  0.114190        1.0          3.212839
+24  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1723.15  BCC_B2#1  0.927066        0.0          3.304213
+25  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1723.15  BCC_B2#3  0.072934        1.0          3.215384
+26  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1773.15  BCC_B2#1  0.975783        0.0          3.301405
+27  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1773.15  BCC_B2#2  0.024217        1.0          3.217990
+28  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1823.15  BCC_B2#1  1.000000        0.0          3.301163
+29  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1873.15  BCC_B2#1  1.000000        0.0          3.303055
+30  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1923.15  BCC_B2#1  1.000000        0.0          3.304972
+31  {'Ru': 15, 'Nb': 70, 'Ti': 15}      1973.15  BCC_B2#1  1.000000        0.0          3.306916
+32  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2023.15  BCC_B2#1  1.000000        0.0          3.308886
+33  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2073.15  BCC_B2#1  1.000000        0.0          3.310882
+34  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2123.15  BCC_B2#1  1.000000        0.0          3.312904
+35  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2173.15  BCC_B2#1  1.000000        0.0          3.314954
+36  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2223.15  BCC_B2#1  0.965906        0.0          3.317563
+37  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2223.15  LIQUID#1  0.034094        NaN               NaN
+38  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2273.15  BCC_B2#1  0.687509        0.0          3.323969
+39  {'Ru': 15, 'Nb': 70, 'Ti': 15}      2273.15  LIQUID#1  0.312491        NaN               NaN
+
+
+### DOES THE ALLOY FORM BCC AND B2? ###
+Alloy forms BCC and B2
+
+### TEMPERATURE STABILITY ###
+We want the BCC to be more stable than the B2 phase
+Temperature difference between BCC and B2:  500.0
+
+
+    Temperature  Phases  QuantBCC   QuantB2  TotalBCCandB2  LatticeMismatch
+0        373.15  BCC+B2  0.700000  0.300000       1.000000        -0.045700
+1        773.15  BCC+B2  0.700111  0.299889       1.000000        -0.044897
+2       1073.15  BCC+B2  0.705322  0.294678       1.000000        -0.041659
+3       1173.15  BCC+B2  0.712428  0.287572       1.000000        -0.040135
+4       1273.15  BCC+B2  0.725227  0.274773       1.000000        -0.038411
+5       1373.15  BCC+B2  0.745888  0.254112       1.000000        -0.036468
+6       1423.15  BCC+B2  0.759918  0.240082       1.000000        -0.035401
+7       1473.15  BCC+B2  0.776913  0.223087       1.000000        -0.034260
+8       1523.15  BCC+B2  0.797353  0.202647       1.000000        -0.033039
+9       1573.15  BCC+B2  0.821824  0.178176       1.000000        -0.031729
+10      1623.15  BCC+B2  0.851036  0.148964       1.000000        -0.030327
+11      1673.15  BCC+B2  0.885810  0.114190       1.000000        -0.028832
+12      1723.15  BCC+B2  0.927066  0.072934       1.000000        -0.027250
+13      1773.15  BCC+B2  0.975783  0.024217       1.000000        -0.025590
+14      1823.15     BCC  1.000000       NaN       1.000000              NaN
+15      1873.15     BCC  1.000000       NaN       1.000000              NaN
+16      1923.15     BCC  1.000000       NaN       1.000000              NaN
+17      1973.15     BCC  1.000000       NaN       1.000000              NaN
+18      2023.15     BCC  1.000000       NaN       1.000000              NaN
+19      2073.15     BCC  1.000000       NaN       1.000000              NaN
+20      2123.15     BCC  1.000000       NaN       1.000000              NaN
+21      2173.15     BCC  1.000000       NaN       1.000000              NaN
+22      2223.15     BCC  0.965906       NaN       0.965906              NaN
+23      2273.15     BCC  0.687509       NaN       0.687509              NaN
+
+### THERMOCALC CONFIDENCE ###
+
+Number of Critically Assessed Ternaries:  0
+Fraction of Critically Assessed Ternaries:  0.0
+
+Number of Tentatively Assessed Ternaries:  0
+Fraction of Tentatviely Assessed Ternaries:  0.0
+
+Total Number of Assessed Ternaries:  0
+Fraction of Assessed Ternaries:  0.0
+
+Thermo-Calc Confidence Score is:  -1.0
