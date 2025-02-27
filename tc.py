@@ -282,6 +282,16 @@ class calc():
         ### END TESTING REGION ###
 
 
+        """
+        Neal: Let me know how you want to continue with the scoring dataframe. I think you'd be the best
+        person to build the actually scoring function—hopefully the info above is everything that you need to put that
+        together. It captures whether or not BCC and/or B2 forms, their stable temperatures, the amount of each phase (and
+        therefore the amount of non-BCC/B2 phases) and it gives the coherency between the BCC and B2 phase. 
+
+        Let me know if you need any other information though!
+        """
+
+
 
 
 
