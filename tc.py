@@ -90,7 +90,15 @@ class calc():
                         a = np.nan # reset lattice parameter
 
                         # Measure how much of the phase we have
-                        phasequantity = calc_result.get_value_of(ThermodynamicQuantity.mole_fraction_of_a_phase(phase)) 
+                        phasequantity = calc_result.get_value_of(ThermodynamicQuantity.mole_fraction_of_a_phase(phase))
+
+                        # Extract the phase composition
+                        phasecomposition = {} # Create an empty dictionary to append to
+                        for element in elements:
+                            phasecomposition[element] = calc_result.get_value_of(ThermodynamicQuantity.composition_of_phase_as_mole_fraction(phase, element))
+                        # phasecomposition = calc_result.get_value_of(ThermodynamicQuantity.composition_of_phase_as_mole_fraction('All'))
+                        # phasecomposition = calc_result.get_value_of(ThermodynamicQuantity.composition_of_phase_as_mole_fraction(phase, "All"))
+
 
                         # ThermoCalc annoying does not clearly output whether a phase is truly BCC or B2
                         # but rather uses a combined name for each. We need to extract whether this
@@ -118,17 +126,20 @@ class calc():
                                           'Phase': phase,
                                           'Quantity': phasequantity,
                                           'IsOrdered': is_ordered,
-                                          'LatticeParameter': a
+                                          'LatticeParameter': a,
+                                          'PhaseComposition': phasecomposition
                                           })
                     print(temp) # For testing only, just to get an idea of how fast the calculations run
                     
-                except:
+                except Exception as e:
+                    print('Exception:', e)
                     phaselist.append({"Global Composition": self.globalcomp, 
                                       "Temperature": temp,
                                       'Phase': np.nan,
                                       'Quantity': np.nan,
                                       'IsOrdered': np.nan,
-                                      'LatticeParameter': np.nan
+                                      'LatticeParameter': np.nan,
+                                      'PhaseComposition': np.nan
                                       })
                     pass
         
@@ -179,19 +190,20 @@ class calc():
         else:
             # Generate a list of ternaries 
             alloy_ternaries = list(combinations(elements, 3))
+            self.alloy_ternaries = alloy_ternaries
             tent_assessed_bool = [] # Create an empty list for the number of tentatively assessed systems
             crit_assessed_bool = [] # Create an empty list for the number of critically assessed systmes
             for ternary in alloy_ternaries:
                 tent_assessed_bool.append(check_elements_in_df(tent, ternary))
                 crit_assessed_bool.append(check_elements_in_df(crit, ternary))
-            tent_assessed = sum(tent_assessed_bool)
-            crit_assessed = sum(crit_assessed_bool)
+            self.tent_assessed = sum(tent_assessed_bool)
+            self.crit_assessed = sum(crit_assessed_bool)
 
             # Assign a confidence score
             ### WE NEED TO WORK ON THIS (SEE BELOW)
-            self.confidence_score = ((crit_assessed/len(alloy_ternaries)) 
-                                     + (0.5 * tent_assessed/len(alloy_ternaries)) 
-                                     - (len(alloy_ternaries)-crit_assessed-tent_assessed))
+            self.confidence_score = ((self.crit_assessed/len(alloy_ternaries)) 
+                                     + (0.5 * self.tent_assessed/len(alloy_ternaries)) 
+                                     - (len(alloy_ternaries)-self.crit_assessed-self.tent_assessed))
 
         """
         Neal: We should talk more (probably with Sam and Satanu) about how to do
@@ -223,14 +235,14 @@ class calc():
         """
         
         ### TESTING REGION TKTK ###
-        print('Number of Critically Assessed Ternaries: ', crit_assessed)
-        print('Fraction of Critically Assessed Ternaries: ', crit_assessed/len(alloy_ternaries))
+        print('Number of Critically Assessed Ternaries: ', self.crit_assessed)
+        print('Fraction of Critically Assessed Ternaries: ', self.crit_assessed/len(alloy_ternaries))
         print()
-        print('Number of Tentatively Assessed Ternaries: ', tent_assessed)
-        print('Fraction of Tentatviely Assessed Ternaries: ', tent_assessed/len(alloy_ternaries))
+        print('Number of Tentatively Assessed Ternaries: ', self.tent_assessed)
+        print('Fraction of Tentatviely Assessed Ternaries: ', self.tent_assessed/len(alloy_ternaries))
         print()
-        print('Total Number of Assessed Ternaries: ', crit_assessed + tent_assessed)
-        print('Fraction of Assessed Ternaries: ', (crit_assessed + tent_assessed)/len(alloy_ternaries))
+        print('Total Number of Assessed Ternaries: ', self.crit_assessed + self.tent_assessed)
+        print('Fraction of Assessed Ternaries: ', (self.crit_assessed + self.tent_assessed)/len(alloy_ternaries))
         ### END TESTING REGION ###
 
         
@@ -291,22 +303,33 @@ class calc():
             # and quantify each phase
             is_bcc = len(bccs[bccs.Temperature == temp]) > 0
             is_b2 = len(b2s[b2s.Temperature == temp]) > 0
+            # Check if any conditions form multiple bccs or b2s at a single temp
+            # is_multiple_bcc = len(bccs[bccs.Temperature == temp]) > 1
+            # is_multiple_b2 = len(b2s[b2s.Temperature == temp]) > 1
             if is_bcc and is_b2:
                 phase_status = 'BCC+B2'
                 amount_bcc = sum(bccs[bccs.Temperature == temp].Quantity)
                 amount_b2 = sum(b2s[b2s.Temperature == temp].Quantity)
                 bccb2_quant = amount_bcc + amount_b2
+                bcc_output = bccs.loc[bccs.Temperature==temp, 'PhaseComposition'].to_list()
+                b2_output = b2s.loc[b2s.Temperature==temp, 'PhaseComposition'].to_list()
             elif is_bcc:
                 phase_status = 'BCC'
                 amount_bcc = sum(bccs[bccs.Temperature == temp].Quantity)
                 bccb2_quant = amount_bcc
+                bcc_output = bccs.loc[bccs.Temperature==temp, 'PhaseComposition'].to_list()
+                b2_output = np.nan
             elif is_b2:
                 phase_status = 'B2'
                 amount_b2 = sum(b2s[b2s.Temperature == temp].Quantity)
                 bccb2_quant = amount_b2
+                bcc_output = np.nan
+                b2_output = b2s.loc[b2s.Temperature==temp, 'PhaseComposition'].to_list()
             else:
                 phase_status = 'No BCC or B2'
                 bccb2_quant = 0
+                bcc_output = np.nan
+                b2_output = np.nan
 
             # Check for lattice mismatch
             if is_bcc:
@@ -320,7 +343,8 @@ class calc():
 
             scoring_list.append({'Temperature':temp, 'Phases':phase_status, 
                                'QuantBCC': amount_bcc, 'QuantB2': amount_b2,'TotalBCCandB2': bccb2_quant, 
-                               'LatticeMismatch':a_mismatch})
+                               'LatticeMismatch':a_mismatch,
+                               'BCC_Output':bcc_output, 'B2_Output':b2_output})
         
         self.scoring_df = pd.DataFrame(scoring_list)
         
